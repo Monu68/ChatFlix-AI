@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react';
 import Header from './Header';
 import {checkValidData} from '../utils/Validate'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../utils/Firebase';
 
 const Login = () => {
 
@@ -13,8 +15,40 @@ const Login = () => {
 
     const handleButtonClick = () => {
 
-        const message = checkValidData(name.current.value,email.current.value,password.current.value);
+        const message = checkValidData(name.current?.value,email.current?.value,password.current?.value);
         setErrorMessage(message);
+
+        if(message) return;
+
+        //SignUp and SignIn Logic
+
+        if(!isSignInForm){
+            //SignUp Logic
+            createUserWithEmailAndPassword(auth, email.current?.value,password.current?.value)
+            .then((userCredential) => {
+                
+                const user = userCredential.user
+                console.log(user)
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                setErrorMessage(errorCode + " : " + errorMessage)
+            })
+        }
+        else{
+            //SignIn Logic
+            signInWithEmailAndPassword(auth, email.current?.value,password.current?.value)
+            .then((userCredential) => {
+                const user = userCredential.user
+                console.log(user)
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                setErrorMessage(errorCode + " : " + errorMessage)
+            })
+        }
     }
 
     const toggleSignInForm = () => {
