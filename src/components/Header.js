@@ -1,21 +1,41 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from '../utils/chatflix-logo1.png';
-import { signOut } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../utils/Firebase';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { addUser, removeUser } from '../utils/userSlice';
 
 const Header = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(store => store.user);
   const handleSignOut = () =>{
     signOut(auth).then(() => {
-      navigate('/')
     })
     .catch((error) => {
       navigate('/error')
     })
-  }
+  };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth,(user) => {
+        if(user){
+            const {uid, email, displayName} = user;
+            dispatch(
+              addUser({uid:uid, email:email, displayName:displayName})
+            )
+            navigate("/browse");
+        }
+        else{
+            dispatch(removeUser());
+            navigate("/");
+        }
+    });
+
+    //unsubscribe when component unmounts
+    return () => unsubscribe();
+  }, []);
   return (
     <div className="absolute w-screen  bg-red-800 p-2 flex justify-between items-center">
       <img className="w-36 h-auto object-contain" src={logo} alt="Chatflix Logo" />
