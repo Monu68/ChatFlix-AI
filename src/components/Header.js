@@ -37,7 +37,7 @@ const Header = () => {
     return () => unsubscribe();
   }, []);
   return (
-    <div className="absolute w-screen  bg-red-500 p-2 flex justify-between items-center">
+    <div className="absolute w-screen  bg-red-800 bg-opacity-80 p-2 flex justify-between items-center">
       <img className="w-36 h-auto object-contain" src={logo} alt="Chatflix Logo" />
     
      {user && <div className='flex mx-2'>
