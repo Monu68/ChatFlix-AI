@@ -9,7 +9,13 @@ export const API_OPTION = {
     }
   };
 
-  export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w500/"
+  export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w500/";
 
+  export const BG_URL = "https://img.freepik.com/free-vector/cinema-stage-background-with-clapperboard-popcorn-chairs_1017-38722.jpg?semt=ais_hybrid";
 
+export const SUPPORTED_LANGUAGE = [
+  {identifier: "en", name:"English"}, 
+  {identifier: "hindi", name:"Hindi"}, 
+  {identifier: "spanish", name:"Spanish"}
+]
   

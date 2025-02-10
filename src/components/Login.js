@@ -5,6 +5,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfi
 import { auth } from '../utils/Firebase';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
+import { BG_URL } from '../utils/constant';
 
 const Login = () => {
 
@@ -71,7 +72,7 @@ const Login = () => {
     <div className="relative w-full h-screen overflow-hidden">
       <img
         className="absolute top-0 left-0 w-full h-full object-cover"
-        src="https://img.freepik.com/free-vector/cinema-stage-background-with-clapperboard-popcorn-chairs_1017-38722.jpg?semt=ais_hybrid"
+        src={BG_URL}
         alt="Background"
       />
       <Header />
